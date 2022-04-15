@@ -23,6 +23,7 @@ from collections import Counter
 from subprocess import run
 from tqdm import tqdm
 from zipfile import ZipFile
+import time
 
 
 def download_url(url, output_path, show_progress=True):
@@ -380,8 +381,9 @@ if __name__ == '__main__':
     args_ = get_setup_args()
 
     # Download resources
+    
     download(args_)
-
+    curr_time = time.time()
     # Import spacy language model
     nlp = spacy.blank("en")
 
@@ -394,3 +396,4 @@ if __name__ == '__main__':
     glove_ext = f'.txt' if glove_dir.endswith('d') else f'.{args_.glove_dim}d.txt'
     args_.glove_file = os.path.join(glove_dir, os.path.basename(glove_dir) + glove_ext)
     pre_process(args_)
+    print("Time used in %fs"%(time.time()-curr_time))
